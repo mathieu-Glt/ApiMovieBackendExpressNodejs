@@ -180,8 +180,6 @@ app.use("/api/auth", authLimiter);
 
 app.use(express.json()); // parse le body JSON
 app.use(express.urlencoded({ extended: false })); // parse les formulaires HTML
-app.use("/images", express.static("images"));
-app.use(express.static(path.join(__dirname, "build"))); // sert le build React
 
 // ─────────────────────────────────────────────
 // SESSION
@@ -276,6 +274,9 @@ fs.readdirSync(path.join(__dirname, "routes")).forEach((file) => {
   app.use(`/api/${routeName}`, route);
   console.log(`Route chargée : /api/${routeName}`);
 });
+
+app.use("/images", express.static("images"));
+app.use(express.static(path.join(__dirname, "build"))); // sert le build React
 
 //Option B
 // ─────────────────────────────────────────────
