@@ -1,0 +1,10 @@
+// routes/index.js
+// module.exports = [
+//   { path: "/api/users", router: require("./user.routes") },
+//   { path: "/api/tintins", router: require("./tintin.routes") },
+//   { path: "/api/favories", router: require("./favories.routes") },
+//   { path: "/api/characters", router: require("./character.routes") },
+//   { path: "/api/herge", router: require("./herge.routes") },
+//   { path: "/api/auth", router: require("./authRoutes") },
+//   { path: "/api/persoTintin", router: require("./persoTintin.routes") },
+// ];
