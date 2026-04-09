@@ -136,7 +136,7 @@ app.use(
 // 2. CORS — restriction des origines autorisées
 const allowedOrigins =
   process.env.NODE_ENV === "production"
-    ? ["https://ton-vrai-domaine.com"]
+    ? [process.env.CLIENT_URL]
     : ["http://localhost:3000"];
 
 app.use(
