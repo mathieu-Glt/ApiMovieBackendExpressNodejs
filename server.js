@@ -122,6 +122,7 @@ const config = require("./config");
 // ─────────────────────────────────────────────
 
 const app = express();
+app.set("trust proxy", 1);
 
 // ─────────────────────────────────────────────
 // MIDDLEWARES DE SÉCURITÉ (en premier)
@@ -134,24 +135,20 @@ app.use(
   }),
 );
 // 2. CORS — restriction des origines autorisées
-const allowedOrigins =
-  process.env.NODE_ENV === "production"
-    ? [process.env.CLIENT_URL]
-    : ["http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  process.env.CLIENT_URL, // URL du front déployé
+].filter(Boolean);
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // autorise les requêtes sans origin (ex: Postman, curl)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = `L'origine ${origin} n'est pas autorisée par CORS`;
-        return callback(new Error(msg), false);
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
-      return callback(null, true);
+      return callback(null, false); // refuse proprement, sans lever d'erreur 500
     },
-    credentials: true, // permet l'envoi de cookies/session
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   }),
 );
